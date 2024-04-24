@@ -58,7 +58,7 @@ void Engine::DisplayProperties()
 {
 	std::cout << "Displaying propertis of simulation" << std::endl;
 	std::cout << "Backpack capacity: " << BACKPACK_WEIGHT << std::endl;
-	std::cout << "Nzumber of backpacks in an iteration: " << BACKPACK_COUNT_PER_ITERATION << std::endl;
+	std::cout << "Number of backpacks in an iteration: " << BACKPACK_COUNT_PER_ITERATION << std::endl;
 	std::cout << "Item max weight: " << MAX_WEIGHT << std::endl;
 	std::cout << "Item max value: " << MAX_VALUE << std::endl;
 }
@@ -122,6 +122,8 @@ void Engine::Run()
 		iterations[currentIteration]->SelectBest();
 		GenerateNewIteration();
 	}
+	iterations[currentIteration]->Mutate(RAND_MAX / 8, iterationsCount);
+	iterations[currentIteration]->SelectBest();
 }
 
 Engine::Engine() : availableItems(0), currentIteration(0), iterations(0), iterationsCount(0)

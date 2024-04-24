@@ -132,7 +132,6 @@
     <ClCompile Include="Item.hpp" />
     <ClCompile Include="IterationState.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backpack.hpp" />

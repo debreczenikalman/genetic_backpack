@@ -27,9 +27,9 @@ void IterationState::Populate()
 
 void IterationState::Mutate(int mutationChance, int iterationIndex)
 {
-	for (int i = 0; i < BACKPACK_COUNT_PER_ITERATION; i++)
+	for (int i = 1; i < BACKPACK_COUNT_PER_ITERATION; i++)
 	{
-		if (rand() < mutationChance)
+		// if (rand() < mutationChance)
 		{
 			Engine::GetInstance()->mutator(backpacks[i], iterationIndex);
 		}

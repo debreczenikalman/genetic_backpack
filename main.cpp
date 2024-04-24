@@ -30,8 +30,7 @@ void MutateSimple(Backpack* backpack, int iterationIndex)
 {
 	for (int i = 0; i < ITEMS_COUNT; i++)
 	{
-		bool debug = (rand() < (RAND_MAX / (1.0 + iterationIndex)) + 1024);
-		backpack->includedItems[i] ^= debug;
+		backpack->includedItems[i] ^= (rand() < (RAND_MAX / (1.0 + iterationIndex)) + 1024);
 	}
 }
 
@@ -41,9 +40,9 @@ void MutateSimple(Backpack* backpack, int iterationIndex)
 int main()
 {
 	SAY "Genetic backpack problem solver" << ENDL;
-	unsigned int iterationsCount = 0xFF; // 
+	unsigned int iterationsCount = 0xFF;
 
-	srand(2);
+	srand(123);
 
 	Engine* e = Engine::GetInstance(iterationsCount);
 	e->DisplayProperties();
