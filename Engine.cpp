@@ -11,7 +11,7 @@ Engine::~Engine()
 	{
 		delete iterations[i];
 	}
-
+	delete[] iterations;
 	for (int i = 0; i < ITEMS_COUNT; i++)
 	{
 		delete availableItems[i];

@@ -4,13 +4,13 @@
 class Engine;
 enum GeneticSelector;
 
-#define ITEMS_COUNT 256
-#define BACKPACK_COUNT_PER_ITERATION 0xF
-#define BACKPACK_WEIGHT 2048
-#define TEST_LENGTH 1024
+#define ITEMS_COUNT 0b1000000000
+#define BACKPACK_COUNT_PER_ITERATION 0b10000
+#define BACKPACK_WEIGHT 0b100000000000
+#define TEST_LENGTH 0b1000000000
 
-#define MAX_VALUE 2048
-#define MAX_WEIGHT 2048
+#define MAX_VALUE 0b1000000000000
+#define MAX_WEIGHT 0b1000000000000
 
 #include "IterationState.hpp"
 #include "Backpack.hpp"
