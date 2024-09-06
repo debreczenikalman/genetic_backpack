@@ -20,29 +20,25 @@ public:
 
 	~IterationState()
 	{
-		for (int i = 0; i < BACKPACK_COUNT_PER_ITERATION; i++)
-		{
-			delete backpacks[i];
-		}
 		delete[] backpacks;
 	}
 
-	// Array of pointers
-	Backpack** backpacks;
 
-	// Pointer to best
-	Backpack* best;
+	Backpack* backpacks;
+	Backpack* selected[2];
 
-	void Populate(Backpack* original);
 	void Populate();
+	void PopulateBacterial(IterationState* original);
+	void PopulateCrossover(IterationState* original, unsigned int k = 1); // k = 1 -> uniform
 
-	void Mutate(int mutationChance, int iterationIndex);
+	void Mutate(unsigned int mutationChance);
 	
-	void SelectBest();
+	void SelectBest(GeneticSelector selector, int count = 0);
 
 private:
 	void Initialise();
-
+	void SelectBestOf(int count);
+	void SelectRoulette(int count);
 };
 
 

@@ -36,3 +36,14 @@ int Backpack::Weight()
 	}
 	return weight;
 }
+
+void Backpack::Mutate(unsigned int chance)
+{
+	for (size_t i = 1; i < ITEMS_COUNT; i++)
+	{
+		if (rand() < chance)
+		{
+			includedItems[i] ^= 0b01;
+		}
+	}
+}

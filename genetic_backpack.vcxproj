@@ -132,11 +132,13 @@
     <ClCompile Include="Item.hpp" />
     <ClCompile Include="IterationState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestCase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backpack.hpp" />
     <ClInclude Include="Engine.hpp" />
     <ClInclude Include="IterationState.hpp" />
+    <ClInclude Include="TestCase.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,7 +12,6 @@ class Backpack
 public:
 	Backpack()
 	{
-		includedItems = new bool[ITEMS_COUNT];
 		for (int i = 0; i < ITEMS_COUNT; i++)
 		{
 			includedItems[i] = false;
@@ -21,7 +20,6 @@ public:
 
 	Backpack(Backpack& other)
 	{
-		includedItems = new bool[ITEMS_COUNT];
 		for (int i = 0; i < ITEMS_COUNT; i++)
 		{
 			includedItems[i] = other.includedItems[i];
@@ -41,12 +39,14 @@ public:
 	int Value();
 	int Weight();
 
+	void Mutate(unsigned int chance);
+
 	~Backpack()
 	{
-		delete[] includedItems;
+
 	}
 
-	bool* includedItems;
+	bool includedItems[ITEMS_COUNT];
 
 private:
 
