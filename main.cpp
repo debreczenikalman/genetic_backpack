@@ -1,4 +1,3 @@
-
 #include <iostream>
 
 #include "Backpack.hpp"
@@ -76,66 +75,69 @@ int main()
 		}
 	}
 
-	for (size_t i = 0; i < testLen; i++)
+	if (true)
 	{
-		for (size_t j = 0; j < TEST_LENGTH; j++)
+		for (size_t i = 0; i < testLen; i++)
 		{
-			averageValues[i][j] = averageValues[i][j] / (top - begin);
-		}
-
-		constexpr int width = 128;
-		constexpr int height = 15;
-		char graph[height][width];
-		int max = 0;
-		for (size_t j = 0; j < TEST_LENGTH; j++)
-		{
-			if (averageValues[i][j] > max)
+			for (size_t j = 0; j < TEST_LENGTH; j++)
 			{
-				max = averageValues[i][j];
+				averageValues[i][j] = averageValues[i][j] / (top - begin);
 			}
-		}
 
-		for (size_t i = 0; i < height; i++)
-		{
-			for (size_t j = 0; j < width; j++)
+			constexpr int width = 128;
+			constexpr int height = 15;
+			char graph[height][width];
+			int max = 0;
+			for (size_t j = 0; j < TEST_LENGTH; j++)
 			{
-				graph[i][j] = ' ';
-				if (j == 0)
+				if (averageValues[i][j] > max)
 				{
-					char val = (height - i) % 10 + 48;
-					graph[i][j] = val;
+					max = averageValues[i][j];
 				}
-				if (i == height - 1)
+			}
+
+			for (size_t i = 0; i < height; i++)
+			{
+				for (size_t j = 0; j < width; j++)
 				{
-					char val = (j + 1) % 10 + 48;
-					if (val == 48)
+					graph[i][j] = ' ';
+					if (j == 0)
 					{
-						val = ' ';
+						char val = (height - i) % 10 + 48;
+						graph[i][j] = val;
 					}
-					graph[i][j] = val;
+					if (i == height - 1)
+					{
+						char val = (j + 1) % 10 + 48;
+						if (val == 48)
+						{
+							val = ' ';
+						}
+						graph[i][j] = val;
+					}
 				}
 			}
-		}
 
-		for (size_t j = 0; j < width; j++)
-		{
-			double debugValue = averageValues[i][(unsigned int)(TEST_LENGTH / width) * j];
-			int index = (debugValue / 1.0 / max) * height;
-			index = height - index - 1;
-			if (index < 0)
-			{
-				index = 0;
-			}
-			graph[index][j] = '#';
-		}
-		std::cout << "Max: " << max << std::endl;
-		for (size_t i = 0; i < height; i++)
-		{
 			for (size_t j = 0; j < width; j++)
 			{
-				std::cout << graph[i][j];
+				double debugValue = averageValues[i][(unsigned int)(TEST_LENGTH / width) * j];
+				int index = (debugValue / 1.0 / max) * height;
+				index = height - index - 1;
+				if (index < 0)
+				{
+					index = 0;
+				}
+				graph[index][j] = '#';
 			}
-			std::cout << std::endl;
+			std::cout << "Max: " << max << std::endl;
+			for (size_t i = 0; i < height; i++)
+			{
+				for (size_t j = 0; j < width; j++)
+				{
+					std::cout << graph[i][j];
+				}
+				std::cout << std::endl;
+			}
 		}
 	}
 
