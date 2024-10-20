@@ -10,25 +10,31 @@ class Backpack;
 class Backpack
 {
 public:
-	Backpack()
+	bool* includedItems;
+	Backpack() : includedItems(new bool[Engine::itemsCount])
 	{
-		for (int i = 0; i < ITEMS_COUNT; i++)
+		for (size_t i = 0; i < Engine::itemsCount; i++)
 		{
 			includedItems[i] = false;
 		}
 	}
 
-	Backpack(Backpack& other)
+	Backpack(Backpack& other) : includedItems(new bool[Engine::itemsCount])
 	{
-		for (int i = 0; i < ITEMS_COUNT; i++)
+		for (int i = 0; i < Engine::itemsCount; i++)
 		{
 			includedItems[i] = other.includedItems[i];
 		}
 	}
 
+	~Backpack()
+	{
+		delete includedItems;
+	}
+
 	void operator=(const Backpack& other)
 	{
-		for (int i = 0; i < ITEMS_COUNT; i++)
+		for (int i = 0; i < Engine::itemsCount; i++)
 		{
 			includedItems[i] = other.includedItems[i];
 		}
@@ -40,15 +46,6 @@ public:
 	int Weight();
 
 	void Mutate(unsigned int chance);
-
-	~Backpack()
-	{
-
-	}
-
-	bool includedItems[ITEMS_COUNT];
-
-private:
 
 };
 

@@ -2,140 +2,56 @@
 #include <cstdlib>
 #include <iostream>
 
-
 Engine* Engine::instancePtr = nullptr; // Move this to the .cpp file
+
+int Engine::randomSeed = 1;
+int Engine::corssoverK = 0b10;
+int Engine::itemsCount = 0b10000000000;			// The number of available items
+int Engine::backpacksCount = 0b100000;			// The number of backpacks in each run
+int Engine::backpackWeight = 0b100000000000;	// The max weight of one backpack
+int Engine::testLength = 0b100000000;			// How many runs there are
+int Engine::itemMaxValue = 0b1000000000000;		// Maximum value of an item
+int Engine::itemMaxWeight = 0b1000000000000;	// Maximum weight of an item
+
+Engine::Engine() : availableItems(new Item[Engine::itemsCount]), iterations()
+{
+	srand(randomSeed);
+	iterations.reserve(testLength);
+	for (int i = 0; i < Engine::itemsCount; i++)
+	{
+		availableItems[i] = Item({ (unsigned int)rand() % Engine::itemMaxWeight, (unsigned int)rand() % Engine::itemMaxValue});
+	}
+}
 
 Engine::~Engine()
 {
-	for (int i = 0; i < 2; i++)
+	delete[] availableItems;
+	for (size_t i = 0; i < iterations.size(); i++)
 	{
 		delete iterations[i];
 	}
-	delete[] iterations;
-	for (int i = 0; i < ITEMS_COUNT; i++)
-	{
-		delete availableItems[i];
-	}
-	delete[] availableItems;
+	instancePtr = nullptr;
 }
 
-void Engine::DisplayCurrentIteration()
+void Engine::First(int mutationChance, GeneticSelector selector, PopulateMethod method)
 {
-	//std::cout << "Displaying " << currentIteration << "th iteration" << std::endl;
-	//for (int i = 0; i < BACKPACK_COUNT_PER_ITERATION; i++)
-	//{
-	//	std::cout << "Backpack no." << i << std::endl;
-	//	iterations[currentIteration]->backpacks[i].Display();
-	//}
-	std::cout << "Displaying best" << std::endl;
-	iterations[currentIteration]->SelectBest(BestOf);
-	iterations[currentIteration]->selected[0]->Display();
-	std::cout << "Value: " << iterations[currentIteration]->selected[0]->Value() << std::endl;
-	std::cout << "Weight: " << iterations[currentIteration]->selected[0]->Weight() << std::endl;
+	IterationPool* pool = new IterationPool();
+	pool->Populate(method);
+	iterations.push_back(pool);
 }
 
-void Engine::DisplayItems()
+void Engine::Next(int mutationChance, GeneticSelector selector, PopulateMethod method)
 {
-	std::cout << "Displaying items:" << std::endl;
-	for (int i = 0; i < ITEMS_COUNT; i++)
-	{
-		std::cout << "Item no. " << i << ": " << std::endl;
-		std::cout << "\tWieght: " << availableItems[i]->weight << std::endl;
-		std::cout << "\tValue: " << availableItems[i]->value << std::endl;
-		std::cout << "=========================================" << std::endl;
-	}
+	IterationPool* last = iterations.back();
+	IterationPool* next = new IterationPool();
+	last->Select(selector);
+	next->Populate(method, last);
+	next->Mutate(mutationChance);
+	iterations.push_back(next);
 }
 
-void Engine::DisplayProperties()
+int Engine::MemCheck()
 {
-	std::cout << "Displaying propertis of simulation" << std::endl;
-	std::cout << "Backpack capacity: " << BACKPACK_WEIGHT << std::endl;
-	std::cout << "Number of backpacks in an iteration: " << BACKPACK_COUNT_PER_ITERATION << std::endl;
-	std::cout << "Item max weight: " << MAX_WEIGHT << std::endl;
-	std::cout << "Item max value: " << MAX_VALUE << std::endl;
+	return _CrtDumpMemoryLeaks();
 }
 
-void Engine::GenerateNewIteration(PopulateMethod method)
-{
-	IterationState* current = iterations[currentIteration];
-	++currentIteration;
-	currentIteration %= 2;
-	IterationState* future = iterations[currentIteration];
-	switch (method)
-	{
-		case Bacterial:
-			future->PopulateBacterial(current);
-			break;
-		case Crossover:
-			future->PopulateCrossover(current);
-			break;
-		case EndOfPopulateMethod:
-		default:
-			std::runtime_error("Invalid selector");
-			break;
-	}
-}
-
-void Engine::FirstIteration()
-{
-	iterations[0]->Populate();
-	iterations[1]->Populate();
-}
-
-void Engine::Run(int mutationChance, Backpack* store, GeneticSelector selector, PopulateMethod method)
-{
-	FirstIteration();
-	for (int i = 0; i < iterationsCount; i++)
-	{
-		iterations[currentIteration]->Mutate(mutationChance);
-		if (selector == GeneticSelector::BestOf)
-		{
-			iterations[currentIteration]->SelectBest(selector, 2);
-		}
-		else
-		{
-			iterations[currentIteration]->SelectBest(selector, 2);
-		}
-		store[i] = Backpack(*iterations[currentIteration]->selected[0]);
-		GenerateNewIteration(method);
-	}
-	iterations[currentIteration]->Mutate(mutationChance);
-	if (selector == GeneticSelector::BestOf)
-	{
-		iterations[currentIteration]->SelectBest(selector, 2);
-	}
-	else
-	{
-		iterations[currentIteration]->SelectBest(selector, 2);
-	}
-	store[iterationsCount - 1] = Backpack(*iterations[currentIteration]->selected[0]);
-}
-
-
-Engine::Engine() : availableItems(0), currentIteration(0), iterations(0), iterationsCount(0)
-{
-	Initialise();
-}
-
-Engine::Engine(int iterationsCount) : availableItems(0), currentIteration(0), iterations(0), iterationsCount(iterationsCount)
-{
-	Initialise();
-}
-
-void Engine::Initialise()
-{
-	if (iterationsCount > 0)
-	{
-		iterations = new IterationState * [2];
-		for (int i = 0; i < 2; i++)
-		{
-			iterations[i] = new IterationState();
-		}
-	}
-
-	availableItems = new Item * [ITEMS_COUNT];
-	for (int i = 0; i < ITEMS_COUNT; i++)
-	{
-		availableItems[i] = new Item({ (unsigned int)rand() % MAX_WEIGHT, (unsigned int)rand() % MAX_VALUE, 0 });
-	}
-}

@@ -5,7 +5,6 @@ struct Item
 {
 	unsigned int weight;
 	unsigned int value;
-	float geneDominance;
 };
 
 #endif

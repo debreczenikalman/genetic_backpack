@@ -24,13 +24,10 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IterationState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Backpack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestCase.cpp">
+    <ClCompile Include="IterationPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +35,13 @@
     <ClInclude Include="Backpack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IterationState.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestCase.hpp">
+    <ClInclude Include="TestEngine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IterationPool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

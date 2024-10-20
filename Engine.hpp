@@ -1,20 +1,6 @@
-#ifndef ENGINE
-#define ENGINE
+#pragma once
 
 class Engine;
-enum GeneticSelector;
-
-#define ITEMS_COUNT 0b1000000000
-#define BACKPACK_COUNT_PER_ITERATION 0b10000
-#define BACKPACK_WEIGHT 0b100000000000
-#define TEST_LENGTH 0b1000000000
-
-#define MAX_VALUE 0b1000000000000
-#define MAX_WEIGHT 0b1000000000000
-
-#include "IterationState.hpp"
-#include "Backpack.hpp"
-#include "Item.hpp"
 
 enum GeneticSelector
 {
@@ -30,9 +16,35 @@ enum PopulateMethod
 	EndOfPopulateMethod
 };
 
+#include "Item.hpp"
+//#include "Backpack.hpp"
+class Backpack;
+#include "IterationPool.hpp"
+#include <vector>
+
+constexpr int testLen = ((int)GeneticSelector::EndOfSelectors) * ((int)PopulateMethod::EndOfPopulateMethod);
+
 class Engine
 {
+	Engine();
+	static Engine* instancePtr;
 public:
+	static int randomSeed;
+	static int corssoverK;
+	static int itemsCount;
+	static int backpacksCount;
+	static int backpackWeight;
+	static int testLength;
+	static int itemMaxValue;
+	static int itemMaxWeight;
+
+	Item* availableItems;
+	std::vector<IterationPool*> iterations;
+
+	//IterationState** iterations;
+	//unsigned int iterationsCount;
+	//unsigned int currentIteration;
+
 	Engine(Engine& other) = delete;
 
 	void operator=(const Engine& other) = delete;
@@ -43,44 +55,20 @@ public:
 	{
 		if (instancePtr == nullptr)
 		{
-			instancePtr = new Engine(0);
+			instancePtr = new Engine();
 		}
 		return instancePtr;
 	}
 
-	static Engine* GetInstance(unsigned int iterationsCount)
-	{
-		if (instancePtr == nullptr)
-		{
-			instancePtr = new Engine(iterationsCount);
-		}
-		return instancePtr;
-	}
+	void First(int mutationChance, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
+	void Next(int mutationChance, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
 
-	Item** availableItems;
+	static int MemCheck();
 
-	IterationState** iterations;
-	unsigned int iterationsCount;
-	unsigned int currentIteration;
-
-	void DisplayCurrentIteration();
-	void DisplayItems();
-	void DisplayProperties();
-	void GenerateNewIteration(PopulateMethod method);
-	void FirstIteration();
-	void Run(int mutationChance, Backpack* store, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
-	
-
-private:
-	Engine();
-	Engine(int iterationsCount);
-	void Initialise();
-	static Engine* instancePtr;
+	//void DisplayCurrentIteration();
+	//void DisplayItems();
+	//void DisplayProperties();
+	//void GenerateNewIteration(PopulateMethod method);
+	//void FirstIteration();
+	//void Run(int mutationChance, Backpack* store, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
 };
-
-
-
-
-
-
-#endif

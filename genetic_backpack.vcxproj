@@ -130,15 +130,14 @@
     <ClCompile Include="Backpack.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Item.hpp" />
-    <ClCompile Include="IterationState.cpp" />
+    <ClCompile Include="IterationPool.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TestCase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backpack.hpp" />
     <ClInclude Include="Engine.hpp" />
-    <ClInclude Include="IterationState.hpp" />
-    <ClInclude Include="TestCase.hpp" />
+    <ClInclude Include="IterationPool.hpp" />
+    <ClInclude Include="TestEngine.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
