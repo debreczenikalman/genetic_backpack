@@ -61,7 +61,7 @@ void IterationPool::PopulateCrossover(IterationPool* base)
 	Backpack* offspring = new Backpack();
 	for (size_t i = 0; i < Engine::itemsCount; i++)
 	{
-		if (i % Engine::corssoverK == 0)
+		if (i % Engine::crossoverK == 0)
 		{
 			++selectIndex;
 		}

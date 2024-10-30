@@ -25,6 +25,8 @@ public:
 		std::cout << "2: BackpackSizeTest (influence the backpack size) (1 - 32)" << std::endl;
 		std::cout << "3: IterationCountTest (NO. of generations = 1 << parameter) (1 - 10)" << std::endl;
 		std::cout << "4: SeedTest (srand(parameter)) (100 - 200)" << std::endl;
+		std::cout << "5: CrossoverTest (must select Crossover selector) (2 - 10)" << std::endl;
+		std::cout << "6: CrossoverPercentageTest (must select Crossover selector) (1 - 30)" << std::endl;
 	}
 
 	static void DisplayParameters()
@@ -43,7 +45,7 @@ public:
 		std::ofstream fs(name);
 		fs << "Metadata for genetic_backpack inner settings:" << std::endl;
 		fs << NAME_AND_VALUE(Engine::randomSeed) << std::endl;
-		fs << NAME_AND_VALUE(Engine::corssoverK) << std::endl;
+		fs << NAME_AND_VALUE(Engine::crossoverK) << std::endl;
 		fs << NAME_AND_VALUE(Engine::itemsCount) << std::endl;
 		fs << NAME_AND_VALUE(Engine::backpacksCount) << std::endl;
 		fs << NAME_AND_VALUE(Engine::backpackWeight) << std::endl;
@@ -245,6 +247,80 @@ public:
 			}
 
 			std::string name = "random_seed_" + std::to_string(Engine::randomSeed);
+			name = name + ".txt";
+			long long sep = 0;
+			std::ofstream fs(name);
+
+			for (size_t i = 0; i < Engine::backpacksCount; i++)
+			{
+				BeginLine(fs);
+				for (size_t j = 0; j < Engine::testLength; j++)
+				{
+					SaveStates(fs, e->iterations[j]->backpacks[i]->Value());
+				}
+				SaveNextLine(fs);
+			}
+			EndFile(fs);
+			delete e;
+		}
+	}
+
+	static void CrossoverTest(size_t bottom, size_t top)
+	{
+		Metadata("crossover_metadata.txt");
+		for (size_t k = bottom; k < top; k++)
+		{
+			Engine* e = Engine::GetInstance();
+			int mutationChance = 32;
+
+			Engine::crossoverK = k;
+			srand(Engine::randomSeed);
+
+			e->First(mutationChance);
+
+			for (size_t i = 0; i < Engine::testLength; i++)
+			{
+				e->Next(mutationChance, globalSelector, globalPopulator);
+			}
+
+			std::string name = "crossover_k_" + std::to_string(Engine::crossoverK);
+			name = name + ".txt";
+			long long sep = 0;
+			std::ofstream fs(name);
+
+			for (size_t i = 0; i < Engine::backpacksCount; i++)
+			{
+				BeginLine(fs);
+				for (size_t j = 0; j < Engine::testLength; j++)
+				{
+					SaveStates(fs, e->iterations[j]->backpacks[i]->Value());
+				}
+				SaveNextLine(fs);
+			}
+			EndFile(fs);
+			delete e;
+		}
+	}
+
+	static void CrossoverPercentageTest(size_t bottom, size_t top)
+	{
+		Metadata("crossover_percentage_metadata.txt");
+		for (size_t k = bottom; k < top; k++)
+		{
+			Engine* e = Engine::GetInstance();
+			int mutationChance = 32;
+
+			Engine::crossoverK =  1.0 * k / 100.0 * Engine::itemsCount;
+			srand(Engine::randomSeed);
+
+			e->First(mutationChance);
+
+			for (size_t i = 0; i < Engine::testLength; i++)
+			{
+				e->Next(mutationChance, globalSelector, globalPopulator);
+			}
+
+			std::string name = "crossover_percentage_k_" + std::to_string(Engine::crossoverK);
 			name = name + ".txt";
 			long long sep = 0;
 			std::ofstream fs(name);

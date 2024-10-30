@@ -30,7 +30,7 @@ class Engine
 	static Engine* instancePtr;
 public:
 	static int randomSeed;
-	static int corssoverK;
+	static int crossoverK;
 	static int itemsCount;
 	static int backpacksCount;
 	static int backpackWeight;

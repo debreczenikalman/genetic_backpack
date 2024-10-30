@@ -15,7 +15,7 @@ int main()
 	else
 	{
 		std::string matlabCode =
-			"	function plot_rows()\n"
+			"function plot_rows()\n"
 			"	% Define the values structure\n"
 			"	values = [\n"
 			"\n"
@@ -32,8 +32,8 @@ int main()
 			"% Plot each row separately\n"
 			"	hold on;% Keep the current plot so that we can overlay multiple plots\n"
 			"	for i = 1:num_rows\n"
-			"		plot(values(i, :, 'DisplayName', ['Row ' num2str(i)]);\n"
-			"end\n"
+			"		plot(values(i, :), 'DisplayName', ['Backpack ' num2str(i)]);\n"
+			"	end\n"
 			"\n"
 			"	% Calculate the average of each column\n"
 			"	column_averages = mean(values, 1);\n"
@@ -42,39 +42,45 @@ int main()
 			"	plot(column_averages, 'k--', 'DisplayName', 'Column Averages', 'LineWidth', 2);\n"
 			"\n"
 			"% Add labels and legend\n"
-			"	xlabel('Column Index');\n"
-			"ylabel('Value');\n"
-			"title('Row and Column Averages');\n"
-			"legend('show');\n"
-			"hold off;% Release the hold on the current plot\n"
-			"	end\n"
+			"	xlabel('No. of generation');\n"
+			"	ylabel('Generation value');\n"
+			"	title('Genetic Knapsack problem results');\n"
+			"	legend('show');\n"
+			"	hold off;% Release the hold on the current plot\n"
+			"end\n"
 			"\n"
-			"	% Call the function to run the smoothing plot\n"
 			"	plot_rows();\n";
 		std::ofstream matlabOut("plot_results.m");
 		matlabOut << matlabCode;
 		matlabOut.flush();
 		matlabOut.close();
 	}
+
 	TestEngine::DisplayTests();
-	TestEngine::DisplayParameters();
+
 	std::cout << "=========================================================" << std::endl;
 	std::cout << "Select test to run: ";
 	int select = 0;
 	std::cin >> select;
 
-	std::cout << "Parameters: " << std::endl;
-
-	std::cout << "Bottom: ";
 	int bottom = 0;
-	std::cin >> bottom;
-
-	std::cout << "Top: ";
 	int top = 0;
-	std::cin >> top;
+	int populator = 0;
+
+	if (select != 0)
+	{
+		std::cout << "Parameters: " << std::endl;
+
+		std::cout << "Bottom: ";
+		std::cin >> bottom;
+
+		std::cout << "Top: ";
+		std::cin >> top;
+	}
+
+	TestEngine::DisplayParameters();
 
 	std::cout << "Select populator: ";
-	int populator = 0;
 	std::cin >> populator;
 
 	switch (populator)
@@ -85,6 +91,7 @@ int main()
 			std::cout << "Default populator: Bacterial" << std::endl;
 			break;
 	}
+
 
 	std::cout << "Select selector: ";
 	populator = 0;
@@ -107,6 +114,8 @@ int main()
 		case 2: TestEngine::BackpackSizeTest(bottom, top); break;
 		case 3: TestEngine::IterationCountTest(bottom, top); break;
 		case 4: TestEngine::SeedTest(bottom, top); break;
+		case 5: TestEngine::CrossoverTest(bottom, top); break;
+		case 6: TestEngine::CrossoverPercentageTest(bottom, top); break;
 		default: std::cout << "No test selected" << std::endl; break;
 	}
 	std::cout << "Done! Check your files!" << std::endl;

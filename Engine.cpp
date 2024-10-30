@@ -5,13 +5,13 @@
 Engine* Engine::instancePtr = nullptr; // Move this to the .cpp file
 
 int Engine::randomSeed = 1;
-int Engine::corssoverK = 0b10;
-int Engine::itemsCount = 0b10000000000;			// The number of available items
-int Engine::backpacksCount = 0b100000;			// The number of backpacks in each run
-int Engine::backpackWeight = 0b100000000000;	// The max weight of one backpack
-int Engine::testLength = 0b100000000;			// How many runs there are
-int Engine::itemMaxValue = 0b1000000000000;		// Maximum value of an item
-int Engine::itemMaxWeight = 0b1000000000000;	// Maximum weight of an item
+int Engine::crossoverK = 2;
+int Engine::itemsCount = 1024;			// The number of available items
+int Engine::backpacksCount = 16;		// The number of backpacks in each run
+int Engine::backpackWeight = 128;		// The max weight of one backpack
+int Engine::testLength = 128;			// How many runs there are
+int Engine::itemMaxValue = 32;		// Maximum value of an item
+int Engine::itemMaxWeight = 32;		// Maximum weight of an item
 
 Engine::Engine() : availableItems(new Item[Engine::itemsCount]), iterations()
 {
