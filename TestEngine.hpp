@@ -22,7 +22,7 @@ public:
 		std::cout << "Possible tests: (bottom, top parameters) - (recommended)" << std::endl;
 		std::cout << "0: Default (ignore parameters)" << std::endl;
 		std::cout << "1: DividerTest (mutationChance = RAND_MAX / (1 << parameter)) - (1 - 14)" << std::endl;
-		std::cout << "2: BackpackSizeTest (influence the backpack size) (1 - 32)" << std::endl;
+		std::cout << "2: BackpackCountTest (influence the backpack size) (1 - 32)" << std::endl;
 		std::cout << "3: IterationCountTest (NO. of generations = 1 << parameter) (1 - 10)" << std::endl;
 		std::cout << "4: SeedTest (srand(parameter)) (100 - 200)" << std::endl;
 		std::cout << "5: CrossoverTest (must select Crossover selector) (2 - 10)" << std::endl;
@@ -127,6 +127,7 @@ public:
 		Metadata("divider.txt");
 		for (size_t exponent = bottom; exponent < top; exponent++)
 		{
+			srand(Engine::randomSeed);
 			Engine* e = Engine::GetInstance();
 			int mutationChance = RAND_MAX / (1 << exponent);
 
@@ -156,11 +157,12 @@ public:
 		}
 	}
 
-	static void BackpackSizeTest(size_t bottom, size_t top)
+	static void BackpackCountTest(size_t bottom, size_t top)
 	{
-		Metadata("backpack_sizes.txt");
+		Metadata("backpack_count.txt");
 		for (size_t count = bottom; count < top; count++)
 		{
+			srand(Engine::randomSeed);
 			Engine* e = Engine::GetInstance();
 			int mutationChance = 32;
 
@@ -173,7 +175,7 @@ public:
 				e->Next(mutationChance, globalSelector, globalPopulator);
 			}
 
-			std::string name = "backpack_sizes_" + std::to_string(Engine::backpacksCount);
+			std::string name = "backpack_count_" + std::to_string(Engine::backpacksCount);
 			name = name + ".txt";
 			long long sep = 0;
 			std::ofstream fs(name);
@@ -197,6 +199,7 @@ public:
 		Metadata("iteration_count.txt");
 		for (size_t exponent = bottom; exponent < top; exponent++)
 		{
+			srand(Engine::randomSeed);
 			Engine* e = Engine::GetInstance();
 			int mutationChance = 32;
 
@@ -270,11 +273,11 @@ public:
 		Metadata("crossover_metadata.txt");
 		for (size_t k = bottom; k < top; k++)
 		{
+			srand(Engine::randomSeed);
 			Engine* e = Engine::GetInstance();
 			int mutationChance = 32;
 
 			Engine::crossoverK = k;
-			srand(Engine::randomSeed);
 
 			e->First(mutationChance);
 
@@ -307,11 +310,12 @@ public:
 		Metadata("crossover_percentage_metadata.txt");
 		for (size_t k = bottom; k < top; k++)
 		{
+			srand(Engine::randomSeed);
 			Engine* e = Engine::GetInstance();
 			int mutationChance = 32;
 
-			Engine::crossoverK =  1.0 * k / 100.0 * Engine::itemsCount;
-			srand(Engine::randomSeed);
+			Engine::crossoverK = 1.0 * k / 100.0 * Engine::itemsCount;
+
 
 			e->First(mutationChance);
 

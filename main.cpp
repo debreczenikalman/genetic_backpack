@@ -76,6 +76,9 @@ int main()
 
 		std::cout << "Top: ";
 		std::cin >> top;
+
+		std::cout << "Random seed: ";
+		std::cin >> Engine::randomSeed;
 	}
 
 	TestEngine::DisplayParameters();
@@ -111,7 +114,7 @@ int main()
 	{
 		case 0: TestEngine::DefaultTest(); break;
 		case 1: TestEngine::DividerTest(bottom, top); break;
-		case 2: TestEngine::BackpackSizeTest(bottom, top); break;
+		case 2: TestEngine::BackpackCountTest(bottom, top); break;
 		case 3: TestEngine::IterationCountTest(bottom, top); break;
 		case 4: TestEngine::SeedTest(bottom, top); break;
 		case 5: TestEngine::CrossoverTest(bottom, top); break;
