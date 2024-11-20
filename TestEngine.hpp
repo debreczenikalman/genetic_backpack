@@ -22,11 +22,11 @@ public:
 		std::cout << "Possible tests: (bottom, top parameters) - (recommended)" << std::endl;
 		std::cout << "0: Default (ignore parameters)" << std::endl;
 		std::cout << "1: DividerTest (mutationChance = RAND_MAX / (1 << parameter)) - (1 - 14)" << std::endl;
-		std::cout << "2: BackpackCountTest (influence the backpack size) (1 - 32)" << std::endl;
+		std::cout << "2: BackpackCountTest (influence the number of backpacks) (1 - 32)" << std::endl;
 		std::cout << "3: IterationCountTest (NO. of generations = 1 << parameter) (1 - 10)" << std::endl;
 		std::cout << "4: SeedTest (srand(parameter)) (100 - 200)" << std::endl;
-		std::cout << "5: CrossoverTest (must select Crossover selector) (2 - 10)" << std::endl;
-		std::cout << "6: CrossoverPercentageTest (must select Crossover selector) (1 - 30)" << std::endl;
+		std::cout << "5: CrossoverTest (must select Crossover) (2 - 10)" << std::endl;
+		std::cout << "6: CrossoverPercentageTest (must select Crossover) (1 - 30)" << std::endl;
 	}
 
 	static void DisplayParameters()
