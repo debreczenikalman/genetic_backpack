@@ -17,7 +17,6 @@ enum PopulateMethod
 };
 
 #include "Item.hpp"
-//#include "Backpack.hpp"
 class Backpack;
 #include "IterationPool.hpp"
 #include <vector>
@@ -41,10 +40,6 @@ public:
 	Item* availableItems;
 	std::vector<IterationPool*> iterations;
 
-	//IterationState** iterations;
-	//unsigned int iterationsCount;
-	//unsigned int currentIteration;
-
 	Engine(Engine& other) = delete;
 
 	void operator=(const Engine& other) = delete;
@@ -64,11 +59,4 @@ public:
 	void Next(int mutationChance, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
 
 	static int MemCheck();
-
-	//void DisplayCurrentIteration();
-	//void DisplayItems();
-	//void DisplayProperties();
-	//void GenerateNewIteration(PopulateMethod method);
-	//void FirstIteration();
-	//void Run(int mutationChance, Backpack* store, GeneticSelector selector = GeneticSelector::BestOf, PopulateMethod method = PopulateMethod::Bacterial);
 };
